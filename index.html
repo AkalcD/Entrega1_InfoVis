@@ -1,1 +1,137 @@
-<h1>GIthub pages test</h1>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocaloid Retrospective</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 40px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5em;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin: 0 auto;
+            width: 70%;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0 auto;
+            width: 50%;
+            text-align: left;
+        }
+        .list li {
+            margin: 10px 0;
+            font-size: 1.2em;
+            position: relative;
+        }
+        /* Tooltip container */
+        .tooltip {
+            display: none;
+            position: absolute;
+            left: 120%;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            width: 200px;
+        }
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent transparent transparent #333;
+        }
+        .list li:hover .tooltip {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>VOCALOID RETROSPECTIVE</h1>
+
+    <h2>¿Qué es Vocaloid?</h2>
+    <p>Vocaloid es un software de síntesis de voz desarrollado por Yamaha Corporation. Este programa utiliza voz pregrabada que puede ser manipulada para crear letras y melodías. Los productores pueden escribir la letra, componer la melodía y ajustar la expresión vocal, generando una amplia variedad de géneros musicales.</p>
+
+    <div class="section">
+        <h2>Las canciones más populares</h2>
+        <ul class="list">
+            <li><a href="https://www.youtube.com/watch?v=vnw8zURAxkU"><strong>Rollin' Girl, Rolling Girl</strong></a> - Artista: wowaka (14 de febrero de 2010)</li>
+            <li><a href="https://www.youtube.com/watch?v=dSw8CucthGc"><strong>Meltdown</strong></a> - Artista: iroha (19 de diciembre de 2008)</li>
+            <li><a href="https://www.youtube.com/watch?v=HOz-9FzIDf0"><strong>Matryoshka</strong></a> - Artista: Kenshi Yonezu (19 de agosto de 2010)</li>
+            <li><a href="https://www.youtube.com/watch?v=8oBV3jPTW4s&feature=youtu.be"><strong>Lost One's Weeping</strong></a> - Artista: Neru (4 de marzo de 2013)</li>
+            <li><a href="https://www.youtube.com/watch?v=shs0rAiwsGQ"><strong>Senbonzakura</strong></a> - Artista: Kurousa-P (17 de septiembre de 2011)</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Los productores más reconocidos</h2>
+        <ul class="list">
+            <li>DECO*27
+                <div class="tooltip">
+                    <strong>Nombre:</strong> DECO*27 <br>
+                    <strong>Edad:</strong> 36 años <br>
+                    <strong>Bio:</strong> Productor japonés muy influyente en la música Vocaloid, conocido por sus canciones pegajosas y emotivas.
+                </div>
+            </li>
+            <li>Kurousa-P
+                <div class="tooltip">
+                    <strong>Nombre:</strong> Kurousa-P <br>
+                    <strong>Edad:</strong> Desconocida <br>
+                    <strong>Bio:</strong> Famoso por crear "Senbonzakura", uno de los temas más icónicos de Vocaloid.
+                </div>
+            </li>
+            <li>Ryo (Supercell)
+                <div class="tooltip">
+                    <strong>Nombre:</strong> Ryo <br>
+                    <strong>Edad:</strong> 40 años <br>
+                    <strong>Bio:</strong> Miembro de Supercell, famoso por el uso de Miku Hatsune en sus primeros trabajos.
+                </div>
+            </li>
+            <li>Mitchie M
+                <div class="tooltip">
+                    <strong>Nombre:</strong> Mitchie M <br>
+                    <strong>Edad:</strong> Desconocida <br>
+                    <strong>Bio:</strong> Uno de los productores con mejor técnica para simular voces humanas en Vocaloid.
+                </div>
+            </li>
+            <li>Wowaka
+                <div class="tooltip">
+                    <strong>Nombre:</strong> Wowaka <br>
+                    <strong>Edad:</strong> 31 años (fallecido) <br>
+                    <strong>Bio:</strong> Conocido por canciones como "Rolling Girl", fue uno de los productores más influyentes en la escena Vocaloid.
+                </div>
+            </li>
+        </ul>
+    </div>
+    
+    <script>
+        // No se necesita JS adicional ya que el hover se gestiona con CSS
+    </script>
+</body>
+</html>
