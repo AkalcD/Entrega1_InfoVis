@@ -13,7 +13,7 @@ data = [
     ["iroha(sasaki) feat. 鏡音リン", "炉心融解", "Meltdown", "19/12/2008", 1699],
     ["ハチ feat. 初音ミク, GUMI", "マトリョシカ", "Matryoshka", "19/8/2010", 1474],
     ["Neru feat. 鏡音リン Append (Power)", "ロストワンの号哭", "Lost one Gokoku", "4/3/2013", 1402],
-    ["黒うさP feat. 初音ミク", "千本桜", "Thousand Cherry Blossoms", "17/9/2011", 1268],
+    ["黒うさP feat. 初音ミク", "千本桜", "Senbozakura", "17/9/2011", 1268],
     ["wowaka feat. 初音ミク, 鏡音リン", "アンノウン・マザーグース", "Unknown Mother Goose", "18/5/2010", 1262],
     ["Giga feat. 鏡音リン V3 (Solid)", "ビバハピ", "Viva Happy", "17/8/2014", 1195],
     ["ryo feat. 初音ミク", "ODDS&ENDS", "ODDS&ENDS", "14/8/2012", 1169],

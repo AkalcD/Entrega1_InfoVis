@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vocaloid Retrospective</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,22 +12,24 @@
             color: #333;
             margin: 40px;
             text-align: center;
+            transition: background-color 0.3s, color 0.3s;
         }
         h1 {
+            font-family: 'Georgia', serif;
             font-size: 2.5em;
             color: #555;
             margin-bottom: 20px;
         }
         h2 {
-            font-size: 2em;
+            font-family: 'Georgia', serif;
+            font-size: 1.8em;
             color: #333;
             margin-bottom: 30px;
         }
         p {
-            font-size: 1.2em;
+            font-family: 'Georgia', serif;
+            font-size: 1em;
             line-height: 1.6;
-            margin: 0 auto;
-            width: 70%;
         }
         .section {
             margin: 40px 0;
@@ -43,7 +46,6 @@
             font-size: 1.2em;
             position: relative;
         }
-        /* Tooltip container */
         .tooltip {
             display: none;
             position: absolute;
@@ -70,68 +72,208 @@
         .list li:hover .tooltip {
             display: block;
         }
+        .dark-mode {
+            background-color: #1e1e1e;
+            color: #ffffff;
+        }
+        .dark-mode h1,
+        .dark-mode h2,
+        .dark-mode p,
+        .dark-mode .list li {
+            color: #ffffff;
+        }
+        #toggleMode {
+            background-color: #4BC0C0;
+            color: white;
+            border: 2px solid #333;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        #toggleMode:hover {
+            background-color: #333;
+            color: white;
+        }
+        .dark-mode #toggleMode {
+            border: 2px solid white;
+        }
+        .dark-mode #toggleMode:hover {
+            background-color: white;
+            color: black;
+        }
+        
+        /* Estilos para centrar y ajustar la sección de Vocaloid */
+        .vocaloid-description {
+            width: 730px;
+            height: 200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <h1>VOCALOID RETROSPECTIVE</h1>
-
-    <h2>¿Qué es Vocaloid?</h2>
-    <p>Vocaloid es un software de síntesis de voz desarrollado por Yamaha Corporation. Este programa utiliza voz pregrabada que puede ser manipulada para crear letras y melodías. Los productores pueden escribir la letra, componer la melodía y ajustar la expresión vocal, generando una amplia variedad de géneros musicales.</p>
-
-    <div class="section">
-        <h2>Las canciones más populares</h2>
-        <ul class="list">
-            <li><a href="https://www.youtube.com/watch?v=vnw8zURAxkU"><strong>Rollin' Girl, Rolling Girl</strong></a> - Artista: wowaka (14 de febrero de 2010)</li>
-            <li><a href="https://www.youtube.com/watch?v=dSw8CucthGc"><strong>Meltdown</strong></a> - Artista: iroha (19 de diciembre de 2008)</li>
-            <li><a href="https://www.youtube.com/watch?v=HOz-9FzIDf0"><strong>Matryoshka</strong></a> - Artista: Kenshi Yonezu (19 de agosto de 2010)</li>
-            <li><a href="https://www.youtube.com/watch?v=8oBV3jPTW4s&feature=youtu.be"><strong>Lost One's Weeping</strong></a> - Artista: Neru (4 de marzo de 2013)</li>
-            <li><a href="https://www.youtube.com/watch?v=shs0rAiwsGQ"><strong>Senbonzakura</strong></a> - Artista: Kurousa-P (17 de septiembre de 2011)</li>
-        </ul>
-    </div>
-
-    <div class="section">
-        <h2>Los productores más reconocidos</h2>
-        <ul class="list">
-            <li>DECO*27
-                <div class="tooltip">
-                    <strong>Nombre:</strong> DECO*27 <br>
-                    <strong>Edad:</strong> 36 años <br>
-                    <strong>Bio:</strong> Productor japonés muy influyente en la música Vocaloid, conocido por sus canciones pegajosas y emotivas.
-                </div>
-            </li>
-            <li>Kurousa-P
-                <div class="tooltip">
-                    <strong>Nombre:</strong> Kurousa-P <br>
-                    <strong>Edad:</strong> Desconocida <br>
-                    <strong>Bio:</strong> Famoso por crear "Senbonzakura", uno de los temas más icónicos de Vocaloid.
-                </div>
-            </li>
-            <li>Ryo (Supercell)
-                <div class="tooltip">
-                    <strong>Nombre:</strong> Ryo <br>
-                    <strong>Edad:</strong> 40 años <br>
-                    <strong>Bio:</strong> Miembro de Supercell, famoso por el uso de Miku Hatsune en sus primeros trabajos.
-                </div>
-            </li>
-            <li>Mitchie M
-                <div class="tooltip">
-                    <strong>Nombre:</strong> Mitchie M <br>
-                    <strong>Edad:</strong> Desconocida <br>
-                    <strong>Bio:</strong> Uno de los productores con mejor técnica para simular voces humanas en Vocaloid.
-                </div>
-            </li>
-            <li>Wowaka
-                <div class="tooltip">
-                    <strong>Nombre:</strong> Wowaka <br>
-                    <strong>Edad:</strong> 31 años (fallecido) <br>
-                    <strong>Bio:</strong> Conocido por canciones como "Rolling Girl", fue uno de los productores más influyentes en la escena Vocaloid.
-                </div>
-            </li>
-        </ul>
-    </div>
     
+    <button id="toggleMode">
+        <span class="icon">🌙</span>
+    </button>
+
+    <!-- Contenedor para centrar y ajustar la sección de "¿Qué es Vocaloid?" -->
+    <div class="vocaloid-description">
+        <h2>¿Qué es Vocaloid?</h2>
+        <p>Vocaloid es un software de síntesis de voz desarrollado por Yamaha Corporation. Este programa utiliza voz pregrabada que puede ser manipulada para crear letras y melodías. Los productores pueden escribir la letra, componer la melodía y ajustar la expresión vocal, generando una amplia variedad de géneros musicales.</p>
+    </div>
+
+    <div class="section">
+        <h2>Top 15 canciones con mayor puntuación</h2>
+        <div style="width: 820px; height: 570px; margin: 0 auto; display: flex; justify-content: center; align-items: center;">
+            <canvas id="songChart"></canvas>
+        </div>
+    </div>
+
+
     <script>
-        // No se necesita JS adicional ya que el hover se gestiona con CSS
+        const data = [
+        { song: "Rollin’ Girl", rating: 1912, link: "https://youtu.be/vnw8zURAxkU", artist: "Wowaka", releaseDate: "15 de marzo de 2010", image1: "images/wowaka.webp" },
+        { song: "Meltdown", rating: 1699, link: "https://www.youtube.com/watch?v=dSw8CucthGc", artist: "Iroha", releaseDate: "3 de junio de 2009", image1: "images/iroha(sasaki).jpg" },
+        { song: "Matryoshka", rating: 1474, link: "https://youtu.be:/HOz-9FzIDf0", artist: "Kenshi Yonezu", releaseDate: "14 de julio de 2010", image1: "images/ハチ.webp"  },
+        { song: "Lost one's Gokoku", rating: 1402, link: "https://youtu.be/8oBV3jPTW4s", artist: "Neru", releaseDate: "26 de noviembre de 2013", image1: "images/Oshiire-P (Neru).jpeg" },
+        { song: "Senbonzakura", rating: 1268, link: "https://www.youtube.com/watch?v=Mqps4anhz0Q", artist: "Kurousa-P", releaseDate: "17 de septiembre de 2011", image1: "images/Kurousa_p.png" },
+        { song: "Unknown Mother Goose", rating: 1262, link: "https://youtu.be/ZB75e7vzX0I", artist: "Wowaka", releaseDate: "31 de agosto de 2017", image1: "images/wowaka.webp"  },
+        { song: "Viva Happy", rating: 1195, link: "https://youtu.be/TkroHwQYpFE", artist: "Giga", releaseDate: "21 de julio de 2013", image1: "images/Giga.jpeg"  },
+        { song: "ODDS&ENDS", rating: 1169, link: "https://www.youtube.com/watch?v=HUzLUGKwQJc", artist: "Ryo", releaseDate: "29 de agosto de 2012", image1: "images/Ryo.webp" },
+        { song: "Love is War", rating: 1148, link: "https://youtu.be/3Jf3rEzIFpA", artist: "Supercell", releaseDate: "22 de febrero de 2008", image1: "images/Supercell.jpg" },
+        { song: "Romeo and Cinderella", rating: 1088, link: "https://www.youtube.com/watch?v=9HrOqmiEsN8", artist: "Doriko", releaseDate: "6 de octubre de 2008", image1: "images/doriko.webp" },
+        { song: "World is Mine", rating: 1087, link: "https://youtu.be/JW-bFg06Qgc", artist: "Supercell", releaseDate: "31 de mayo de 2008", image1: "images/Supercell.jpg"  },
+        { song: "LUVORATORRRRRY!", rating: 1074, link: "https://youtu.be/LHdlw9F3KP4", artist: "Giga, Reol", releaseDate: "12 de agosto de 2014", image1: "images/Giga.jpeg" },
+        { song: "Tokyo Teddy Bear", rating: 1062, link: "https://youtu.be/eSI7RsjZy1E", artist: "Neru", releaseDate: "20 de diciembre de 2011", image1: "images/Oshiire-P (Neru).jpeg" },
+        { song: "Unknown Mother Goose", rating: 1051, link: "https://youtu.be/P_CSdxSGfaA", artist: "Wowaka", releaseDate: "31 de agosto de 2017", image1: "images/wowaka.webp" },
+        { song: "Melt", rating: 1002, link: "https://www.youtube.com/watch?v=o1jAMSQyVPc", artist: "Ryo", releaseDate: "7 de diciembre de 2007", image1: "images/Ryo.webp" }
+        ]; 
+
+
+        // Ordenar los datos de mayor a menor puntuación
+        data.sort((a, b) => b.rating - a.rating);
+
+        // Añadir números de ranking a los nombres de las canciones
+        const labeledData = data.map((item, index) => ({
+            ...item,
+            labeledSong: `${(index + 1).toString().padStart(2, '0')}. ${item.song}`
+        }));
+
+        const ctx = document.getElementById('songChart').getContext('2d');
+        
+        // Colores iniciales para la gráfica
+        const initialTextColor = '#000000'; // Negro para modo claro
+        const initialBorderColor = 'rgba(75, 192, 192, 1)'; // Color de borde por defecto
+        const darkTextColor = '#ffffff'; // Blanco para modo oscuro
+
+        const chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labeledData.map(item => item.labeledSong),
+                datasets: [{
+                    data: labeledData.map(item => item.rating),
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                    borderColor: initialBorderColor, // Color de borde inicial
+                    borderWidth: 1,
+                    barThickness: 15 // Ajuste para reducir el grosor de las barras
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const songData = labeledData[context.dataIndex]; // Modificar aquí
+                                return [
+                                    `Puntuación: ${context.raw} puntos`,
+                                    `Autor: ${songData.artist}`,
+                                    `Fecha: ${songData.releaseDate}`,
+                                    `Click para reproducir la canción`
+                                ];
+                            },
+                        }
+                    }
+                },
+                onClick: (e, activeEls) => {
+                    if (activeEls.length > 0) {
+                        const idx = activeEls[0].index;
+                        const songLink = labeledData[idx].link;
+                        window.open(songLink, '_blank');
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            //text: 'Puntuación',
+                            color: initialTextColor // Color del título en modo claro
+                        },
+                        ticks: {
+                            color: initialTextColor // Color de los ticks en modo claro
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            //text: 'Canciones',
+                            color: initialTextColor // Color del título en modo claro
+                        },
+                        ticks: {
+                            align: 'end',  // Alinea las etiquetas al final (derecha)
+                            padding: 10,
+                            color: initialTextColor // Color de los ticks en modo claro
+                        },
+                        position: 'right'  // Cambia las etiquetas al lado derecho
+                    }
+                },
+                layout: {
+                    padding: {
+                        left: 100
+                    }
+                }
+            }
+        });
+
+        // Cambiar entre modo oscuro y claro
+        const toggleButton = document.getElementById('toggleMode');
+        toggleButton.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const icon = toggleButton.querySelector('.icon');
+            
+            // Cambiar colores de la gráfica
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            const textColor = isDarkMode ? darkTextColor : initialTextColor;
+            const borderColor = isDarkMode ? darkTextColor : initialBorderColor;
+            
+            // Actualizar los colores de la gráfica
+            chart.options.scales.x.title.color = textColor;
+            chart.options.scales.x.ticks.color = textColor;
+            chart.options.scales.y.title.color = textColor;
+            chart.options.scales.y.ticks.color = textColor;
+            chart.data.datasets[0].borderColor = borderColor;
+            chart.update(); // Actualizar la gráfica
+
+            // Cambiar el ícono del botón
+            icon.textContent = isDarkMode ? '☀️' : '🌙'; // Sol para modo oscuro, luna para modo claro
+        });
     </script>
 </body>
 </html>
