@@ -129,26 +129,6 @@
         .dark-mode #buttonContainer button {
             background-color: #555;
         }
-        #buttonContainer {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between; /* Cambiado de space-around a space-between */
-            align-items: center;
-            height: 100%;
-            padding: 10px 0; /* Reducido el padding */
-        }
-
-        #buttonContainer button:hover {
-            background-color: #3aa0a0;
-            transform: scale(1.1);
-            transition: all 0.2s ease;
-        }
-
-        #buttonContainer {
-            margin-left: 30px;
-            position: relative;
-        }
-
     </style>
 </head>
 <body>
@@ -167,9 +147,10 @@
     <div class="section">
         <h2>Top 15 Canciones con Mayor Puntuación</h2>
         <div style="width: 900px; height: 570px; margin: 0 auto; position: relative;">
-            <div id="buttonContainer" style="position: absolute; left: 0; top: 0;"></div>
+            <div id="buttonContainer" style="position: absolute; left: 20px; top: 0; height: 100%; display: flex; flex-direction: column; justify-content: space-around; z-index: 1;"></div>
             <canvas id="songChart"></canvas>
         </div>
+    </div>
 
 
     <script>
@@ -328,104 +309,77 @@
                 },
                 layout: {
                     padding: {
-                        left: 40  // Reducido de 60 a 40
-                    }
-                },
-                scales: {
-                    y: {
-                        ticks: {
-                            padding: 25,  // Aumentado para dar más espacio a los botones
-                        }
+                        left: 60
                     }
                 }
             }
         });
 
-        // Agregar este código justo después de la creación del gráfico
-        chart.options.animation.onComplete = function() {
-            const chartArea = chart.chartArea;
-            const buttons = buttonContainer.getElementsByTagName('button');
-            const totalHeight = chartArea.bottom - chartArea.top;
-            const buttonSpacing = (totalHeight / (buttons.length - 1))*0.93;
-
-            Array.from(buttons).forEach((button, index) => {
-                button.style.position = 'absolute';
-                button.style.top = `${chartArea.top + index * buttonSpacing + 8}px`; // -10 para ajustar la posición vertical
-            });
-        };
-
-        // Variable global para rastrear el audio actual
-        let currentlyPlayingAudio = null;
-        let currentlyPlayingButton = null;
-
-        // Limpiar el contenedor de botones
+        // Crear botones de reproducción
         const buttonContainer = document.getElementById('buttonContainer');
-        buttonContainer.innerHTML = '';
-
-        // Función para detener la reproducción actual
-        function stopCurrentPlayback() {
-            if (currentlyPlayingAudio) {
-                currentlyPlayingAudio.pause();
-                currentlyPlayingAudio.currentTime = 0;
-                currentlyPlayingButton.innerHTML = '▶';
-                currentlyPlayingAudio = null;
-                currentlyPlayingButton = null;
-            }
-        }
-
-        // Botones de reproducción
-        // Usamos labeledData que ya está ordenado por rating de mayor a menor
-        labeledData.forEach((songData, index) => {
+        labeledData.forEach((song, index) => {
             const button = document.createElement('button');
             button.innerHTML = '▶';
-            button.style.width = '20px';  
-            button.style.height = '20px'; 
+            button.style.width = '30px';
+            button.style.height = '30px';
             button.style.borderRadius = '50%';
             button.style.border = 'none';
             button.style.backgroundColor = '#4BC0C0';
             button.style.color = 'white';
             button.style.cursor = 'pointer';
-            button.style.margin = '0';    
+            button.style.margin = '5px 0';
             button.style.padding = '0';
-            button.style.fontSize = '10px';
             button.style.display = 'flex';
             button.style.justifyContent = 'center';
             button.style.alignItems = 'center';
 
-            // Crear el audio con la ruta correcta del preview
-            let audio = new Audio(songData.preview);
+            let audio = new Audio(`sounds/${song.preview}`);
             let isPlaying = false;
 
             button.onclick = function() {
                 if (isPlaying) {
-                    stopCurrentPlayback();
+                    audio.pause();
+                    audio.currentTime = 0;
+                    button.innerHTML = '▶';
                     isPlaying = false;
                 } else {
-                    stopCurrentPlayback();
                     audio.play();
                     button.innerHTML = '⏹';
                     isPlaying = true;
-                    currentlyPlayingAudio = audio;
-                    currentlyPlayingButton = button;
 
-                    // Detener después de 15 segundos
                     setTimeout(() => {
-                        if (currentlyPlayingAudio === audio) {
-                            stopCurrentPlayback();
-                            isPlaying = false;
-                        }
+                        audio.pause();
+                        audio.currentTime = 0;
+                        button.innerHTML = '▶';
+                        isPlaying = false;
                     }, 15000);
                 }
             };
 
-            audio.addEventListener('ended', () => {
-                stopCurrentPlayback();
-                isPlaying = false;
-            });
-
             buttonContainer.appendChild(button);
         });
 
+        // Ajustar la posición de los botones
+        function adjustButtonPositions() {
+            const chartArea = chart.chartArea;
+            const buttons = buttonContainer.getElementsByTagName('button');
+            const buttonHeight = buttons[0].offsetHeight;
+            const totalHeight = chartArea.bottom - chartArea.top;
+            const spacing = (totalHeight - buttonHeight * buttons.length) / (buttons.length - 1);
+
+            Array.from(buttons).forEach((button, index) => {
+                button.style.position = 'absolute';
+                button.style.top = `${chartArea.top + index * (buttonHeight + spacing)}px`;
+            });
+        }
+
+        // Llamar a adjustButtonPositions después de que el gráfico se haya renderizado completamente
+        chart.options.animation.onComplete = function() {
+            adjustButtonPositions();
+        };
+
+        // También ajustar las posiciones cuando se redimensione la ventana
+        window.addEventListener('resize', adjustButtonPositions);
 
 
         // Cambiar entre modo oscuro y claro
@@ -448,11 +402,7 @@
             chart.update(); // Actualizar la gráfica
 
             // Cambiar el ícono del botón
-            if (isDarkMode) {
-                icon.textContent = '☀️';
-            } else {
-                icon.textContent = '🌙';
-            }
+            icon.textContent = isDarkMode ? '☀️' : '🌙'; // Sol para modo oscuro, luna para modo claro
         });
     </script>
 </body>
