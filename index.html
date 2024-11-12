@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vocaloid Retrospective</title>
+    <audio id="backgroundMusic" loop>
+        <source src="sounds/cancion de fondo.mp3" type="audio/mpeg">
+        Tu navegador no soporta el elemento de audio.
+    </audio>
     <audio id="hoverSound" src="sounds/hover_sound.wav" preload="auto"></audio>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -149,9 +153,55 @@
             position: relative;
         }
 
+        #muteButton {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px;
+            background-color: #4BC0C0;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #muteButton:hover {
+            background-color: #3aa0a0;
+        }
+
+        .dark-mode #muteButton {
+            background-color: #555;
+            color: white;
+        }
+
+        .dark-mode #muteButton:hover {
+            background-color: #777;
+        }
+
+        #muteButton {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        padding: 10px;
+        background-color: #4BC0C0;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        width: 100px; /* Ancho fijo para forzar el salto de línea */
+        white-space: normal; /* Permite que el texto se ajuste en múltiples líneas */
+        line-height: 1.2; /* Espaciado entre líneas */
+        text-align: center; /* Centra el texto */
+    }
+
+
     </style>
 </head>
 <body>
+    <button id="muteButton">Reproducir música de fondo</button>
+
     <h1>VOCALOID RETROSPECTIVE</h1>
     
     <button id="toggleMode">
@@ -402,6 +452,13 @@
                     isPlaying = false;
                 } else {
                     stopCurrentPlayback();
+                    // Pausar la música de fondo si está sonando
+                    if (backgroundMusic.played.length > 0 && !backgroundMusic.paused) {
+                        backgroundMusic.pause();
+                        muteButton.textContent = 'Reproducir\nmúsica de fondo';
+                        window.isPlaying = false;
+                    }
+                    
                     audio.play();
                     button.innerHTML = '⏹';
                     isPlaying = true;
@@ -425,6 +482,7 @@
 
             buttonContainer.appendChild(button);
         });
+
 
 
 
@@ -454,6 +512,42 @@
                 icon.textContent = '🌙';
             }
         });
+
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        const muteButton = document.getElementById('muteButton');
+        let isPlaying = false;
+
+        muteButton.addEventListener('click', () => {
+            if (isPlaying) {
+                backgroundMusic.pause();
+                muteButton.textContent = 'Reproducir\nmúsica de fondo';
+                // Si usas la opción 1 con <br>, usa esta línea en su lugar:
+                // muteButton.innerHTML = 'Reproducir<br>música de fondo';
+                isPlaying = false;
+            } else {
+                backgroundMusic.play().then(() => {
+                    muteButton.textContent = 'Pausar\nmúsica de fondo';
+                    // Si usas la opción 1 con <br>, usa esta línea en su lugar:
+                    // muteButton.innerHTML = 'Pausar<br>música de fondo';
+                    isPlaying = true;
+                }).catch(error => {
+                    console.error('Error al reproducir la música:', error);
+                });
+            }
+        });
+
+        // Actualizar el estilo del botón cuando se cambia el modo oscuro/claro
+        toggleButton.addEventListener('click', () => {
+            // ... (código existente para cambiar entre modos) ...
+
+            // Actualizar el estilo del botón de música
+            if (document.body.classList.contains('dark-mode')) {
+                muteButton.style.backgroundColor = '#555';
+            } else {
+                muteButton.style.backgroundColor = '#4BC0C0';
+            }
+        });
+
     </script>
 </body>
 </html>
