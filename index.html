@@ -130,83 +130,213 @@
             z-index: 100;
         }
 
-        .dark-mode #buttonContainer button {
-            background-color: #555;
-        }
-        #buttonContainer {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between; /* Cambiado de space-around a space-between */
-            align-items: center;
-            height: 100%;
-            padding: 10px 0; /* Reducido el padding */
-        }
-
-        #buttonContainer button:hover {
-            background-color: #3aa0a0;
-            transform: scale(1.1);
-            transition: all 0.2s ease;
-        }
-
-        #buttonContainer {
-            margin-left: 30px;
-            position: relative;
-        }
-
         #muteButton {
             position: absolute;
-            top: 20px;
-            left: 20px;
-            padding: 10px;
+            top: 70px; 
+            right: 20px; 
+            padding: 10px 20px; 
             background-color: #4BC0C0;
             color: white;
-            border: none;
+            border: 2px solid #333; 
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+            width: auto; 
+            white-space: nowrap; 
+            line-height: normal; 
+            text-align: center;
         }
 
+        /* Añadir los estilos hover para coincidir con el otro botón */
         #muteButton:hover {
-            background-color: #3aa0a0;
+            background-color: #333;
+            color: white;
         }
 
+        /* Estilos para modo oscuro */
         .dark-mode #muteButton {
-            background-color: #555;
-            color: white;
+            border: 2px solid white;
+            background-color: #4BC0C0 !important;
         }
 
         .dark-mode #muteButton:hover {
-            background-color: #777;
+            background-color: white;
+            color: black;
         }
 
-        #muteButton {
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        padding: 10px;
-        background-color: #4BC0C0;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-        width: 100px; /* Ancho fijo para forzar el salto de línea */
-        white-space: normal; /* Permite que el texto se ajuste en múltiples líneas */
-        line-height: 1.2; /* Espaciado entre líneas */
-        text-align: center; /* Centra el texto */
-    }
+        .song-card {
+            margin: 20px auto;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            overflow: hidden;
+            max-width: 600px;
+            text-align: center;
+            background: #f4f4f4;
+            color: #333;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .dark-mode .song-card {
+            background: #2a2a2a;
+            color: #fff;
+            border-color: #555;
+        }
+
+        .song-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .song-card img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            margin: 20px auto;
+            border-radius: 50%;
+            border: 4px solid #4BC0C0;
+            transition: border-color 0.3s ease;
+        }
+
+        .dark-mode .song-card img {
+        border-color: #4BC0C0; 
+        }
+
+        .dark-mode .song-card img:hover {
+        border-color: #3aa0a0; 
+        }
+
+        .song-card img:hover {
+            border-color: #3aa0a0;
+        }
+
+        .song-card-body {
+            padding: 20px;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: #4BC0C0;
+            color: white;
+        }
+
+        .dark-mode .btn-primary {
+        background: #4BC0C0;
+        }
+
+        .btn-primary:hover {
+            background: #3aa0a0;
+            transform: scale(1.05);
+        }
+
+        .dark-mode .btn-primary:hover {
+        background: #3aa0a0;
+        }
+
+        #highlightSong {
+            margin-top: 0;
+        }
+
+        .chart-card-container {
+            display: flex;
+            justify-content: center; /* Centrado por defecto */
+            align-items: flex-start;
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            transition: all 0.3s ease; /* Transición general */
+        }
+
+        .chart-container {
+            width: 800px;
+            height: 570px;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        /* Estilo cuando hay una tarjeta seleccionada */
+        .chart-card-container.has-card {
+            justify-content: flex-start;
+        }
+
+        /* Ajuste para la tarjeta */
+        .card-container {
+            width: 400px;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .card-container.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Ajustar el tamaño de la tarjeta para que coincida con la altura del gráfico */
+        .song-card {
+            margin: 0;
+            height: 570px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Ajustar el padding de la tarjeta */
+        .song-card-body {
+            padding: 30px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .qr-code {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 100px; /* Ajusta el tamaño según necesites */
+            height: 100px;
+            z-index: 1000;
+            background-color: white; /* Fondo blanco para mejor visibilidad */
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        .dark-mode .qr-code {
+            background-color: white; /* Mantener fondo blanco incluso en modo oscuro */
+        }
 
 
     </style>
 </head>
 <body>
-    <button id="muteButton">Reproducir música de fondo</button>
+    <img src="images/frame.png" alt="QR Code" class="qr-code">
 
     <h1>VOCALOID RETROSPECTIVE</h1>
     
     <button id="toggleMode">
         <span class="icon">🌙</span>
     </button>
+
+    <button id="muteButton">🔇</button>
 
     <!-- Contenedor para centrar y ajustar la sección de "¿Qué es Vocaloid?" -->
     <div class="vocaloid-description">
@@ -216,11 +346,17 @@
 
     <div class="section">
         <h2>Top 15 Canciones con Mayor Puntuación</h2>
-        <div style="width: 900px; height: 570px; margin: 0 auto; position: relative;">
-            <div id="buttonContainer" style="position: absolute; left: 0; top: 0;"></div>
-            <canvas id="songChart"></canvas>
+        <div class="chart-card-container">
+            <div class="chart-container">
+                <canvas id="songChart"></canvas>
+            </div>
+            <div id="highlightSong" class="card-container">
+                <!-- Aquí se carga la tarjeta destacada -->
+            </div>
         </div>
-
+        <p>Pulsa Las Barras Del Grafico Para dezplegar Mas Detalles 🩵</p>
+    </div>
+        
 
     <script>
 
@@ -228,7 +364,7 @@
         { song: "Rollin’ Girl", rating: 1915, link: "https://youtu.be/vnw8zURAxkU", artist: "Wowaka", releaseDate: "15 de marzo de 2010", image1: "images/wowaka.webp", preview: "sounds/Rollin’ Girl.mp3" },
         { song: "Meltdown", rating: 1699, link: "https://www.youtube.com/watch?v=dSw8CucthGc", artist: "Iroha", releaseDate: "3 de junio de 2009", image1: "images/iroha(sasaki).jpg", preview: "sounds/Meltdown.mp3" },
         { song: "Matryoshka", rating: 1474, link: "https://youtu.be:/HOz-9FzIDf0", artist: "Kenshi Yonezu", releaseDate: "14 de julio de 2010", image1: "images/ハチ.webp", preview: "sounds/Matryoshka.mp3"  },
-        { song: "Lost one's Gokoku", rating: 1402, link: "https://youtu.be/8oBV3jPTW4s", artist: "Neru", releaseDate: "26 de noviembre de 2013", image1: "images/Oshiire-P (Neru).jpeg", preview: "sounds/Lost one's Gokoku.mp3" },
+        { song: "Lost one's Gokoku", rating: 1402, link: "https://youtu.be/8oBV3jPTW4s", artist: "Neru", releaseDate: "26 de noviembre de 2013", image1: "images/Oshiire-P (Neru).jpeg", preview: "sounds/lost_ones_gokoku.mp3" },
         { song: "Senbonzakura", rating: 1271, link: "https://www.youtube.com/watch?v=Mqps4anhz0Q", artist: "Kurousa-P", releaseDate: "17 de septiembre de 2011", image1: "images/Kurousa_p.png", preview: "sounds/Senbonzakura.mp3" },
         { song: "Unknown Mother Goose", rating: 1262, link: "https://youtu.be/ZB75e7vzX0I", artist: "Wowaka", releaseDate: "31 de agosto de 2017", image1: "images/wowaka.webp", preview: "sounds/Unknown Mother Goose.mp3"  },
         { song: "Viva Happy", rating: 1195, link: "https://youtu.be/TkroHwQYpFE", artist: "Giga", releaseDate: "21 de julio de 2013", image1: "images/Giga.jpeg", preview: "sounds/Viva Happy.mp3"  },
@@ -258,6 +394,146 @@
         const initialTextColor = '#000000'; // Negro para modo claro
         const initialBorderColor = 'rgba(75, 192, 192, 1)'; // Color de borde por defecto
         const darkTextColor = '#ffffff'; // Blanco para modo oscuro
+
+        function togglePreview(previewUrl) {
+            const previewButton = document.getElementById('previewButton');
+            
+            // Si no hay audio reproduciéndose actualmente
+            if (!currentlyPlayingAudio) {
+                try {
+                    // Decodificar la URL por si tiene caracteres especiales
+                    const decodedUrl = decodeURIComponent(previewUrl);
+                    
+                    currentlyPlayingAudio = new Audio(decodedUrl);
+                    
+                    // Agregar manejo de errores para la carga del audio
+                    currentlyPlayingAudio.addEventListener('error', (e) => {
+                        console.error('Error al cargar el audio:', e);
+                        alert('No se pudo reproducir el audio. Por favor, inténtelo de nuevo.');
+                        previewButton.textContent = 'Reproducir Vista Previa';
+                    });
+
+                    // Intentar reproducir el audio
+                    const playPromise = currentlyPlayingAudio.play();
+                    
+                    if (playPromise !== undefined) {
+                        playPromise
+                            .then(() => {
+                                // La reproducción se inició correctamente
+                                console.log('Reproducción iniciada');
+                                previewButton.textContent = 'Pausar Vista Previa';
+                            })
+                            .catch(error => {
+                                console.error('Error al reproducir:', error);
+                                alert('No se pudo reproducir el audio. Por favor, inténtelo de nuevo.');
+                                previewButton.textContent = 'Reproducir Vista Previa';
+                                currentlyPlayingAudio = null;
+                            });
+                    }
+
+                    // Añadir evento para cuando termine la reproducción
+                    currentlyPlayingAudio.addEventListener('ended', () => {
+                        previewButton.textContent = 'Reproducir Vista Previa';
+                        currentlyPlayingAudio = null;
+                    });
+                } catch (error) {
+                    console.error('Error en togglePreview:', error);
+                    alert('Ocurrió un error al intentar reproducir el audio.');
+                    previewButton.textContent = 'Reproducir Vista Previa';
+                }
+            } else {
+                // Si hay un audio reproduciéndose
+                if (currentlyPlayingAudio.paused) {
+                    // Si está pausado, lo reproducimos
+                    currentlyPlayingAudio.play();
+                    previewButton.textContent = 'Pausar Vista Previa';
+                } else {
+                    // Si está reproduciéndose, lo pausamos
+                    currentlyPlayingAudio.pause();
+                    previewButton.textContent = 'Reproducir Vista Previa';
+                }
+            }
+        }
+
+
+        // Función para reproducir la vista previa
+        function playPreview(previewUrl) {
+            try {
+                stopCurrentPlayback();
+                
+                // Decodificar la URL por si tiene caracteres especiales
+                const decodedUrl = decodeURIComponent(previewUrl);
+                
+                currentlyPlayingAudio = new Audio(decodedUrl);
+                
+                // Agregar manejo de errores para la carga del audio
+                currentlyPlayingAudio.addEventListener('error', (e) => {
+                    console.error('Error al cargar el audio:', e);
+                    alert('No se pudo reproducir el audio. Por favor, inténtelo de nuevo.');
+                });
+
+                // Intentar reproducir el audio
+                const playPromise = currentlyPlayingAudio.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise
+                        .then(() => {
+                            // La reproducción se inició correctamente
+                            console.log('Reproducción iniciada');
+                        })
+                        .catch(error => {
+                            console.error('Error al reproducir:', error);
+                            alert('No se pudo reproducir el audio. Por favor, inténtelo de nuevo.');
+                            stopCurrentPlayback();
+                        });
+                }
+
+                // Añadir evento para cuando termine la reproducción
+                currentlyPlayingAudio.addEventListener('ended', () => {
+                    stopCurrentPlayback();
+                });
+            } catch (error) {
+                console.error('Error en playPreview:', error);
+                alert('Ocurrió un error al intentar reproducir el audio.');
+            }
+        }
+
+
+        function showHighlightSong(song) {
+            const highlightContainer = document.getElementById('highlightSong');
+            const chartCardContainer = document.querySelector('.chart-card-container');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+
+            // Añadir clase para mover el gráfico
+            chartCardContainer.classList.add('has-card');
+            
+            highlightContainer.innerHTML = `
+                <div class="song-card">
+                    <img src="${song.image1}" alt="${song.song}">
+                    <div class="song-card-body">
+                        <div>
+                            <h5>${song.song}</h5>
+                            <p>Artista: ${song.artist}</p>
+                            <p>Fecha de Lanzamiento: ${song.releaseDate}</p>
+                            <p>Rating: ${song.rating}</p>
+                        </div>
+                        <div class="button-group">
+                            <a href="${song.link}" target="_blank" class="btn btn-primary">Ver en YouTube</a>
+                            <button id="previewButton" class="btn btn-primary" onclick="togglePreview('${song.preview}')">
+                                Reproducir Vista Previa
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Forzar un reflow antes de añadir la clase
+            highlightContainer.offsetHeight;
+            
+            // Añadir clase para la animación
+            highlightContainer.classList.add('visible');
+        }
+
 
         // Función para reproducir el sonido
         function playHoverSound() {
@@ -290,49 +566,10 @@
                         display: false
                     },
                     tooltip: {
-                        enabled: false, // Desactivamos el tooltip por defecto
-                        external: function(context) {
-                            // Eliminar tooltip anterior
-                            let tooltipEl = document.getElementById('chartjs-tooltip');
-                            if (!tooltipEl) {
-                                tooltipEl = document.createElement('div');
-                                tooltipEl.id = 'chartjs-tooltip';
-                                tooltipEl.innerHTML = '<div></div>';
-                                document.body.appendChild(tooltipEl);
-                            }
-
-                            // Ocultar si no hay hover
-                            if (context.tooltip.opacity === 0) {
-                                tooltipEl.style.opacity = 0;
-                                return;
-                            }
-
-                            const dataPoint = context.tooltip.dataPoints[0];
-                            const songData = labeledData[dataPoint.dataIndex];
-                            
-                            tooltipEl.innerHTML = `
-                                <div style="background: rgba(0, 0, 0, 0.8); padding: 10px; border-radius: 5px; color: white;">
-                                    <div style="font-weight: bold;">${songData.labeledSong}</div>
-                                    <div>Puntuación: ${songData.rating} puntos</div>
-                                    <div>Publicación: ${songData.releaseDate}</div>
-                                    <div>Autor: ${songData.artist}</div>
-                                    <div style="margin-top: 8px;">
-                                        <img src="${songData.image1}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 5px;">
-                                    </div>
-                                    <div>Click para reproducir la canción</div>
-                                </div>
-                            `;
-
-                            // Posicionamiento del tooltip
-                            const position = context.chart.canvas.getBoundingClientRect();
-                            tooltipEl.style.opacity = 1;
-                            tooltipEl.style.position = 'absolute';
-                            tooltipEl.style.left = position.left + window.pageXOffset + context.tooltip.caretX + 10 + 'px';
-                            tooltipEl.style.top = position.top + window.pageYOffset + context.tooltip.caretY - 40 + 'px';
-                            tooltipEl.style.pointerEvents = 'none';
-                        }
+                        enabled: false // Desactivamos completamente el tooltip
                     }
                 },
+
                 onHover: (event, chartElement) => {
                     if (chartElement.length === 1) {
                         if (!isOverBar) {
@@ -346,8 +583,9 @@
                 onClick: (e, activeEls) => {
                     if (activeEls.length > 0) {
                         const idx = activeEls[0].index;
-                        const songLink = labeledData[idx].link;
-                        window.open(songLink, '_blank');
+                        const selectedSong = labeledData[idx];
+                        stopCurrentPlayback(); // Detener cualquier reproducción actual
+                        showHighlightSong(selectedSong);
                     }
                 },
                 scales: {
@@ -378,7 +616,7 @@
                 },
                 layout: {
                     padding: {
-                        left: 40  // Reducido de 60 a 40
+                        left: 0  
                     }
                 },
                 scales: {
@@ -391,99 +629,41 @@
             }
         });
 
-        // Agregar este código justo después de la creación del gráfico
-        chart.options.animation.onComplete = function() {
-            const chartArea = chart.chartArea;
-            const buttons = buttonContainer.getElementsByTagName('button');
-            const totalHeight = chartArea.bottom - chartArea.top;
-            const buttonSpacing = (totalHeight / (buttons.length - 1))*0.93;
-
-            Array.from(buttons).forEach((button, index) => {
-                button.style.position = 'absolute';
-                button.style.top = `${chartArea.top + index * buttonSpacing + 8}px`; // -10 para ajustar la posición vertical
-            });
-        };
-
         // Variable global para rastrear el audio actual
         let currentlyPlayingAudio = null;
-        let currentlyPlayingButton = null;
-
-        // Limpiar el contenedor de botones
-        const buttonContainer = document.getElementById('buttonContainer');
-        buttonContainer.innerHTML = '';
 
         // Función para detener la reproducción actual
         function stopCurrentPlayback() {
-            if (currentlyPlayingAudio) {
-                currentlyPlayingAudio.pause();
-                currentlyPlayingAudio.currentTime = 0;
-                currentlyPlayingButton.innerHTML = '▶';
-                currentlyPlayingAudio = null;
-                currentlyPlayingButton = null;
-            }
-        }
-
-        // Botones de reproducción
-        // Usamos labeledData que ya está ordenado por rating de mayor a menor
-        labeledData.forEach((songData, index) => {
-            const button = document.createElement('button');
-            button.innerHTML = '▶';
-            button.style.width = '20px';  
-            button.style.height = '20px'; 
-            button.style.borderRadius = '50%';
-            button.style.border = 'none';
-            button.style.backgroundColor = '#4BC0C0';
-            button.style.color = 'white';
-            button.style.cursor = 'pointer';
-            button.style.margin = '0';    
-            button.style.padding = '0';
-            button.style.fontSize = '10px';
-            button.style.display = 'flex';
-            button.style.justifyContent = 'center';
-            button.style.alignItems = 'center';
-
-            // Crear el audio con la ruta correcta del preview
-            let audio = new Audio(songData.preview);
-            let isPlaying = false;
-
-            button.onclick = function() {
-                if (isPlaying) {
-                    stopCurrentPlayback();
-                    isPlaying = false;
-                } else {
-                    stopCurrentPlayback();
-                    // Pausar la música de fondo si está sonando
-                    if (backgroundMusic.played.length > 0 && !backgroundMusic.paused) {
-                        backgroundMusic.pause();
-                        muteButton.textContent = 'Reproducir\nmúsica de fondo';
-                        window.isPlaying = false;
+            try {
+                if (currentlyPlayingAudio) {
+                    currentlyPlayingAudio.pause();
+                    currentlyPlayingAudio.currentTime = 0;
+                    
+                    // Remover todos los event listeners
+                    currentlyPlayingAudio.removeEventListener('ended', () => {});
+                    currentlyPlayingAudio.removeEventListener('error', () => {});
+                    
+                    // Actualizar el texto del botón si existe
+                    const previewButton = document.getElementById('previewButton');
+                    if (previewButton) {
+                        previewButton.textContent = 'Reproducir Vista Previa';
                     }
                     
-                    audio.play();
-                    button.innerHTML = '⏹';
-                    isPlaying = true;
-                    currentlyPlayingAudio = audio;
-                    currentlyPlayingButton = button;
-
-                    // Detener después de 15 segundos
-                    setTimeout(() => {
-                        if (currentlyPlayingAudio === audio) {
-                            stopCurrentPlayback();
-                            isPlaying = false;
+                    currentlyPlayingAudio = null;
+                    
+                    // Si la música de fondo estaba sonando, también la detenemos
+                    if (backgroundMusic && backgroundMusic.played.length > 0 && !backgroundMusic.paused) {
+                        backgroundMusic.pause();
+                        if (muteButton) {
+                            muteButton.textContent = 'Reproducir\nmúsica de fondo';
                         }
-                    }, 15000);
+                        window.isPlaying = false;
+                    }
                 }
-            };
-
-            audio.addEventListener('ended', () => {
-                stopCurrentPlayback();
-                isPlaying = false;
-            });
-
-            buttonContainer.appendChild(button);
-        });
-
-
+            } catch (error) {
+                console.error('Error en stopCurrentPlayback:', error);
+            }
+        }
 
 
         // Cambiar entre modo oscuro y claro
@@ -520,13 +700,13 @@
         muteButton.addEventListener('click', () => {
             if (isPlaying) {
                 backgroundMusic.pause();
-                muteButton.textContent = 'Reproducir\nmúsica de fondo';
+                muteButton.textContent = '🔇';
                 // Si usas la opción 1 con <br>, usa esta línea en su lugar:
                 // muteButton.innerHTML = 'Reproducir<br>música de fondo';
                 isPlaying = false;
             } else {
                 backgroundMusic.play().then(() => {
-                    muteButton.textContent = 'Pausar\nmúsica de fondo';
+                    muteButton.textContent = '🔊';
                     // Si usas la opción 1 con <br>, usa esta línea en su lugar:
                     // muteButton.innerHTML = 'Pausar<br>música de fondo';
                     isPlaying = true;
